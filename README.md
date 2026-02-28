@@ -3,6 +3,7 @@
 WorldScope is an open-source, real-time global monitoring MVP.
 It combines a 3D Cesium globe with live streams for flights, satellites, and earthquakes.
 
+![alt text](image.png)
 ## Features
 
 - 3D interactive globe powered by CesiumJS
