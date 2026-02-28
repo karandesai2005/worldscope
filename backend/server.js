@@ -1,4 +1,5 @@
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import { createServer } from "node:http";
 import { Server as SocketIOServer } from "socket.io";
@@ -6,6 +7,8 @@ import { Server as SocketIOServer } from "socket.io";
 import { startFlightService } from "./services/flightService.js";
 import { startSatelliteService } from "./services/satelliteService.js";
 import { startEarthquakeService } from "./services/earthquakeService.js";
+
+dotenv.config({ quiet: true });
 
 const PORT = 5000;
 

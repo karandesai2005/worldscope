@@ -171,6 +171,6 @@ Backend (`backend/package.json`):
 - Redis adapter for horizontal Socket.IO scaling
 - Docker Compose and CI pipeline
 
-## License
+    ## License
 
 MIT

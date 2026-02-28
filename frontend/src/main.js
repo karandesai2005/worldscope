@@ -1,7 +1,7 @@
 import "../style.css";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 
-import { initGlobe } from "./globe/initGlobe";
+import { addCountryLayer, initGlobe } from "./globe/initGlobe";
 import { createFlightLayer } from "./globe/flightLayer";
 import { createSatelliteLayer } from "./globe/satelliteLayer";
 import { createEarthquakeLayer } from "./globe/earthquakeLayer";
@@ -9,6 +9,8 @@ import { connectSocket } from "./services/socket";
 import { createControls } from "./ui/controls";
 
 const viewer = initGlobe("globe-container");
+const countryLayer = await addCountryLayer(viewer);
+void countryLayer;
 
 const flightLayer = createFlightLayer(viewer);
 const satelliteLayer = createSatelliteLayer(viewer);
@@ -56,7 +58,7 @@ connectSocket({
   },
   onFlights: (payload = []) => {
     flightLayer.update(payload);
-    controls.updateStats({ aircraft: flightLayer.count() });
+    controls.updateStats({ aircraft: payload.length });
     scheduleRender();
   },
   onSatellites: (payload = []) => {

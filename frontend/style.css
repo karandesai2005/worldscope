@@ -115,9 +115,20 @@ body {
 }
 
 .stat-value {
-  color: var(--accent);
   font-size: 0.98rem;
   font-weight: 700;
+}
+
+#stat-aircraft {
+  color: #39ff14;
+}
+
+#stat-satellites {
+  color: #00e5ff;
+}
+
+#stat-earthquakes {
+  color: #ff6b6b;
 }
 
 .status-row {
@@ -158,6 +169,26 @@ body {
   pointer-events: none;
 }
 
+.country-info {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  min-width: 180px;
+  max-width: min(320px, calc(100vw - 2rem));
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--bg-panel-border);
+  border-radius: 12px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 36px rgba(1, 5, 18, 0.6);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  z-index: 10;
+  pointer-events: none;
+}
+
 @media (max-width: 700px) {
   .control-panel {
     right: 0.5rem;
@@ -174,5 +205,12 @@ body {
     left: 0.5rem;
     bottom: 0.45rem;
     font-size: 0.6rem;
+  }
+
+  .country-info {
+    top: 0.5rem;
+    left: 0.5rem;
+    max-width: min(290px, calc(100vw - 1rem));
+    padding: 0.6rem 0.75rem;
   }
 }
