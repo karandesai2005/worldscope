@@ -121,12 +121,23 @@ Example (`frontend/.env`):
 VITE_SOCKET_URL=http://localhost:5000
 ```
 
+Backend requires API keys/secrets in `backend/.env`:
+
+- `NEWS_API_KEY` (required for live news feed)
+
+Example (`backend/.env`):
+
+```bash
+NEWS_API_KEY=your_newsapi_org_key_here
+```
+
 ## WebSocket Events
 
 Server emits:
 - `flights:update`
 - `satellites:update`
 - `earthquakes:update`
+- `news:update`
 
 ## Data Sources
 

@@ -1,9 +1,15 @@
 import {
   CallbackProperty,
+  Cartesian2,
+  Cartesian3,
   Color,
   GeoJsonDataSource,
   Ion,
+  LabelStyle,
   Rectangle,
+  VerticalOrigin,
+  HorizontalOrigin,
+  NearFarScalar,
   ScreenSpaceEventHandler,
   ScreenSpaceEventType,
   UrlTemplateImageryProvider,
@@ -157,6 +163,46 @@ export async function addCountryLayer(viewer) {
 
   dataSource.entities.values.forEach((entity) => {
     setCountryStyle(entity, COUNTRY_STROKE_COLOR, COUNTRY_STROKE_WIDTH);
+  });
+
+  // add text labels for each country using a simple centroid calculation
+  const computeCentroid = (positions) => {
+    const sum = Cartesian3.clone(Cartesian3.ZERO);
+    for (const p of positions) {
+      Cartesian3.add(sum, p, sum);
+    }
+    const count = positions.length || 1;
+    Cartesian3.divideByScalar(sum, count, sum);
+    return sum;
+  };
+
+  dataSource.entities.values.forEach((entity) => {
+    const name = getCountryName(entity, viewer);
+    if (!name) return;
+
+    let center = null;
+    if (entity.polygon && entity.polygon.hierarchy) {
+      const hierarchy = entity.polygon.hierarchy.getValue(viewer.clock.currentTime);
+      if (hierarchy && hierarchy.positions && hierarchy.positions.length) {
+        center = computeCentroid(hierarchy.positions);
+      }
+    }
+
+    if (center) {
+      entity.position = center;
+      entity.label = {
+        text: name,
+        font: "10px monospace",
+        fillColor: Color.WHITE,
+        style: LabelStyle.FILL_AND_OUTLINE,
+        outlineColor: Color.BLACK,
+        outlineWidth: 2,
+        verticalOrigin: VerticalOrigin.CENTER,
+        horizontalOrigin: HorizontalOrigin.CENTER,
+        pixelOffset: new Cartesian2(0, -8),
+        translucencyByDistance: new NearFarScalar(1.0e6, 1.0, 2.0e7, 0),
+      };
+    }
   });
 
   const countryInfo = ensureCountryInfoElement();
